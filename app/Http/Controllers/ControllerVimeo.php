@@ -20,15 +20,13 @@ class ControllerVimeo extends Controller
     public function store(Request $request, VimeoManager $vimeo)
     {
 
-
-
         // $client = new Vimeo("{client_id}", "{client_secret}", "{access_token}");
-        $client = new Vimeo(env('VIMEO_CLIENT'), env('VIMEO_SECRET'), env('VIMEO_ACCESS'));
+        // $client = new Vimeo(env('VIMEO_CLIENT'), env('VIMEO_SECRET'), env('VIMEO_ACCESS'));
 
-        $response = $client->request("/videos/690202507" . '?fields=link');
-        echo "Your video link is: " . $response['body']['link'];
+        // $response = $client->request("/videos/690202507" . '?fields=link');
+        // echo "Your video link is: " . $response['body']['link'];
 
-        dd($response['body']['link']);
+        // dd($response['body']['link']);
 
         $request->validate([
             'video' => 'required|mimetypes:video/mp4,video/mpeg,video/quicktime|max:60000'
@@ -38,7 +36,7 @@ class ControllerVimeo extends Controller
         $uri = $vimeo->upload($request->video, [
             'name' => $request->title
         ]);
-        // dd($uri);
+        dd($uri);
 
         // do {
         //     $response = $client->request($uri . '?fields=transcode.status');
