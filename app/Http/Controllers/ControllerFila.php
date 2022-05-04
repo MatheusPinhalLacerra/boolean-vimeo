@@ -1,52 +1,36 @@
 <?php
 
-namespace App\Jobs;
-
-
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use App\Models\User;
-use GuzzleHttp\Psr7\Request
+namespace App\Http\Controllers;
+//video-facul: 66584f47cd5931bffa7dae7db2e9578f
+use App\Http\Controllers\Controller;
+use App\Jobs\vimeoRow;
+use Illuminate\Http\Request;
 use Vimeo\Laravel\VimeoManager;
 use Vimeo\Vimeo;
 
 
-class vimeoRow implements ShouldQueue
+
+class ControllerFila extends Controller
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function create()
     {
-
-
+        return view('createFila');
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-
-    public function handle($request, $vimeo)
+    public function store(Request $request, VimeoManager $vimeo)
     {
-        dd("batata");
-        $uri = $vimeo->upload($request->video, [
-            'name' => $request->title
+
+        $request->validate([
+            'video' => 'required|mimetypes:video/mp4,video/mpeg,video/quicktime|max:60000'
         ]);
-        dd($uri);
-    }
-    public function handle(VimeoManager $vimeo)
-    {
-        dd($vimeo);
+
+
+            vimeoRow::dispatch($request,$vimeo);
+
+
+
+
         // $client = new Vimeo("{client_id}", "{client_secret}", "{access_token}");
         // $client = new Vimeo(env('VIMEO_CLIENT'), env('VIMEO_SECRET'), env('VIMEO_ACCESS'));
 
@@ -61,7 +45,7 @@ class vimeoRow implements ShouldQueue
         // $uri = $vimeo->upload($request->video, [
         //     'name' => $request->title
         // ]);
-
+        // dd($uri);
 
         // do {
         //     $response = $client->request($uri . '?fields=transcode.status');
@@ -73,7 +57,6 @@ class vimeoRow implements ShouldQueue
         //         print 'Your video encountered an error during transcoding.';
         //     }
         // } while ($response['body']['transcode']['status'] !== 'complete');
-
 
     }
 }
