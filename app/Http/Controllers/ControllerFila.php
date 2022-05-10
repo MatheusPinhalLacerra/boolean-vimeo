@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 //video-facul: 66584f47cd5931bffa7dae7db2e9578f
 use App\Http\Controllers\Controller;
 use App\Jobs\vimeoRow;
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Http\Request;
 use Vimeo\Laravel\VimeoManager;
-use Vimeo\Vimeo;
 
 
 
@@ -19,17 +19,15 @@ class ControllerFila extends Controller
     }
 
     public function store(Request $request, VimeoManager $vimeo)
-    {
+{
 
-        $request->validate([
-            'video' => 'required|mimetypes:video/mp4,video/mpeg,video/quicktime|max:60000'
-        ]);
+    //$request->all();
 
+        //vimeoRow::dispatch($request->all());
 
-            vimeoRow::dispatch($request,$vimeo);
+        vimeoRow::dispatch($request->all())->onQueue('vimeoRow');
 
-
-
+    dd("fui e voltei");
 
         // $client = new Vimeo("{client_id}", "{client_secret}", "{access_token}");
         // $client = new Vimeo(env('VIMEO_CLIENT'), env('VIMEO_SECRET'), env('VIMEO_ACCESS'));

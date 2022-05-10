@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-//video-facul: 66584f47cd5931bffa7dae7db2e9578f
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Vimeo\Laravel\VimeoManager;
@@ -20,6 +19,7 @@ class ControllerVimeo extends Controller
     public function store(Request $request, VimeoManager $vimeo)
     {
 
+        dd($vimeo);
         // $client = new Vimeo("{client_id}", "{client_secret}", "{access_token}");
         // $client = new Vimeo(env('VIMEO_CLIENT'), env('VIMEO_SECRET'), env('VIMEO_ACCESS'));
 

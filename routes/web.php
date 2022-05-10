@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerVimeo;
 use App\Http\Controllers\ControllerFila;
+use App\Jobs\vimeoRow;
 
 
 Route::get('/', function () {
@@ -17,3 +18,9 @@ Route::post('/videos/upload/fila', [ControllerFila::class, 'store'])->name('vide
 Route::get('/video/create', [ControllerVimeo::class, 'create'])->name('upload-sem-fila');
 
 Route::post('/videos/upload', [ControllerVimeo::class, 'store'])->name('video-upload.store');
+
+Route::get('vimeo-row', function () {
+    vimeoRow::dispatch();
+
+    return redirect('/');
+});
