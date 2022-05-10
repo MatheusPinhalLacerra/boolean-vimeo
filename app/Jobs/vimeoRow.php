@@ -4,11 +4,16 @@ namespace App\Jobs;
 
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+// use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Client\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+
+use PhpParser\Node\Stmt\TryCatch;
+use Vimeo\Laravel\VimeoManager;
+
 use App\Models\User;
 use GuzzleHttp\Psr7\Request
 use Vimeo\Laravel\VimeoManager;
@@ -22,27 +27,49 @@ class vimeoRow implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
      */
-    public function __construct()
+    //public String $queue;
+
+    public function __construct($request)
     {
+         //$this->queue = "vimeoRow";
 
 
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
+      *
      */
 
+    public function handle(Request $request, )
+
+
     public function handle($request, $vimeo)
+
     {
-        dd("batata");
-        $uri = $vimeo->upload($request->video, [
-            'name' => $request->title
-        ]);
-        dd($uri);
+
+         $vimeo = new VimeoManager();
+
+        try {
+
+            $request->validate([
+                'video' => 'required|mimetypes:video/mp4,video/mpeg,video/quicktime|max:60000'
+            ]);
+
+
+            $uri = $vimeo->upload($request->video, [
+                'name' => $request->title
+
+            ]);
+
+        } catch (\Throwable $th) {
+
+
+        }
+
+
+
     }
     public function handle(VimeoManager $vimeo)
     {

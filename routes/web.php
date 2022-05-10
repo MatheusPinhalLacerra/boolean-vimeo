@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerVimeo;
 
 use App\Http\Controllers\ControllerFila;
+use App\Jobs\vimeoRow;
 
 use App\Jobs\vimeoRow;
 
