@@ -1,23 +1,18 @@
+@extends('main')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Upload Video</title>
-</head>
-<body>
+@section('title', 'Upload Vídeo')
 
+@section('content')
 
-    <form action="{{route('video-upload.store')}}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="title" placeholder="title">
-        <input type="file" name="video" placeholder="">
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container" style="margin-top: 20px">
+        <form action="{{ route('video-upload.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <label for="titulo-video">Título (obrigatório)</label>
+            <input id="titulo-video" type="text" name="title" placeholder="title">
+            <input type="file" name="video" placeholder="">
+            <br>
+            <input type="submit" value="Enviar Vídeo">
+        </form>
+    </div>
 
-</body>
-</html>
-
-
+@endsection
